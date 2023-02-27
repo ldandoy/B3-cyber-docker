@@ -1,18 +1,26 @@
 <?php
 
-echo "Hello World !";
+require_once('./functions.php');
 
-$dsn = 'mysql:dbname=b3cyber;host=mysql';
-$user = 'root';
-$password = '';
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+}
 
-$link = new PDO($dsn, $user, $password);
+echo "Hello ".$_SESSION['user']['email']." !";
+
+$link = connectDB();
 
 /*$rows = $link->exec("SELECT * FROM tasks");
 
 var_dump($rows);*/
 
-$sql = 'SELECT * FROM tasks WHERE id = ' . $_GET['id'];
+//dd($_GET);
+
+if(isset($_GET['id'])) {
+    $sql = 'SELECT * FROM tasks WHERE id = ' . $_GET['id'];
+} else {
+    $sql = 'SELECT * FROM tasks';
+}
 
 ?>
 <table>
